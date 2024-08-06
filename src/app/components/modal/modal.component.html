@@ -43,8 +43,8 @@
                         </select>
                     </div>
                     <div class="col mb-4">
-                        <label for=" ">Tasa o Cuota <i class="fa-solid text-danger fa-asterisk"></i></label>
-                        <input type="text" (blur)="porsentajeIngresadoBlur()"
+                        <label >Tasa o Cuota <i class="fa-solid text-danger fa-asterisk"></i></label>
+                        <input type="text" ngbTooltip="Ingrese un valor del 1 al 100." (blur)="porsentajeIngresadoBlur()"
                             class="form-control" formControlName="tasaoCuota" maxlength="3" [imask]="tasaCuota"
                             [unmask]="true" value="{{tasaCuotaDinamico}}">
                     </div>
@@ -53,6 +53,7 @@
                     </div>
 
                     <div class="col mb-4" *ngIf="porcentajeAplicacionTasa">
+                        
                         <label for="customRange3" class="form-label">Porcentaje de Aplicación % {{porcentajeMostrado()}} </label>
                         <input type="range" class="form-range" (change)="porcentaje($event)" 
                         min="0" max="100" value="100">
@@ -66,4 +67,12 @@
         <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
         <button type="button" class="imouestosAgregar" (click)="guardarImpuestos()">Agregar Impuesto</button>
     </div>
+
+
 </ng-template>
+
+@if (show) {
+    <ngb-toast  [autohide]="true" (hidden)="show = false" #dangerTpl style="position: fixed; text-align: center;" class="top-0 end-0 bg-danger text-light">
+        Ingrese valor del 1 al 100.
+    </ngb-toast>
+}

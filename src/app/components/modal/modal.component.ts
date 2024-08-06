@@ -33,6 +33,8 @@ export class ModalComponent {
   public dropdownRetenOtras: optionMultiSelect[] = [];
   public dropdowntTipoFactor: optionMultiSelect[] = [];
 
+  public  show:boolean = false;
+
 
   @Output() myEvent = new EventEmitter<FormGroup>()
 
@@ -76,6 +78,9 @@ export class ModalComponent {
       { value: 3, label: 'CUOTA', selected: false },
       { value: 4, label: 'EXENTO', selected: false },
     ];
+
+   
+
   }
 
 
@@ -134,6 +139,14 @@ export class ModalComponent {
       (this.myFormModal.get('pAplicacion') as FormControl).setValue(String(this.porcentajeMostrado()))
     if ((this.myFormModal.get('tipoFactor') as FormControl).value != "TASA") {
       (this.myFormModal.get('pAplicacion') as FormControl).setValue("N/A")
+    }
+
+    let valorValidotasaoCuota=(this.myFormModal.get('tasaoCuota') as FormControl).value
+    if(valorValidotasaoCuota>100 || valorValidotasaoCuota <1){
+      this.show=true
+      return
+    }else{
+      this.show=false
     }
 
     this.myEvent.emit(this.myFormModal)
