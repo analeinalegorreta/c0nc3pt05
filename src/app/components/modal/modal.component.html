@@ -46,14 +46,14 @@
                         <label for=" ">Tasa o Cuota <i class="fa-solid text-danger fa-asterisk"></i></label>
                         <input type="text" (blur)="porsentajeIngresadoBlur()"
                             class="form-control" formControlName="tasaoCuota" maxlength="3" [imask]="tasaCuota"
-                            [unmask]="true" >
+                            [unmask]="true" value="{{tasaCuotaDinamico}}">
                     </div>
                     <div class="col mb-4">
 
                     </div>
 
                     <div class="col mb-4" *ngIf="porcentajeAplicacionTasa">
-                        <label for="customRange3" class="form-label">Porcentaje de Aplicación % {{tasaCuotaDinamico}}</label>
+                        <label for="customRange3" class="form-label">Porcentaje de Aplicación % {{porcentajeMostrado()}} </label>
                         <input type="range" class="form-range" (change)="porcentaje($event)" 
                         min="0" max="100" value="100">
                     </div>

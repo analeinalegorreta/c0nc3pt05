@@ -24,8 +24,9 @@ export class ModalComponent {
 
   public tasaCuotaDinamico: number
 
+  public prueba2: number 
 
-  public myFormModal: FormGroup
+  public myFormModal: FormGroup 
 
   public dropdownImpuesto: optionMultiSelect[] = [];
   public dropdownLocaloFederal: optionMultiSelect[] = [];
@@ -83,10 +84,10 @@ export class ModalComponent {
     let seleccionado = (item.target as HTMLInputElement).value;
 
     if (seleccionado == "002 IVA") {
-      (this.myFormModal.get('tasaoCuota') as FormControl).setValue("0.16"),
-        (this.myFormModal.get('tipoFactor') as FormControl).setValue("TASA")
+      (this.myFormModal.get('tasaoCuota') as FormControl).setValue("16"),
+      (this.myFormModal.get('tipoFactor') as FormControl).setValue("TASA")
       this.porcentajeAplicacionTasa = true
-
+      this.tasaCuotaDinamico = 16
     } else {
       (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null)
       this.porcentajeAplicacionTasa = false
@@ -125,10 +126,12 @@ export class ModalComponent {
 
 
   guardarImpuestos() {
-    this.myFormModal.markAllAsTouched();
-    if(this.myFormModal.invalid)return;
-    (this.myFormModal.get('pAplicacion') as FormControl).setValue(this.tasaCuotaDinamico)
 
+    this.myFormModal.markAllAsTouched();
+    if (this.myFormModal.invalid) return;
+
+    (this.myFormModal.get('tasaoCuota') as FormControl).setValue(String(this.tasaCuotaDinamico)),
+      (this.myFormModal.get('pAplicacion') as FormControl).setValue(String(this.porcentajeMostrado()))
     if ((this.myFormModal.get('tipoFactor') as FormControl).value != "TASA") {
       (this.myFormModal.get('pAplicacion') as FormControl).setValue("N/A")
     }
@@ -138,13 +141,19 @@ export class ModalComponent {
     this.modalService.dismissAll()
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.modalService.dismissAll()
 
   }
 
 
   inicializarForm() {
+    this.porcentajeAplicacionTasa= false;
+    this.tasaOcuota=undefined
+    this.porcentajeTasaoCuota=undefined
+    this.tasaCuotaDinamico=undefined
+    this.prueba2=undefined  
+
     this.myFormModal = new FormGroup({
       impuesto: new FormControl(),
       federalLocal: new FormControl(),
@@ -156,6 +165,7 @@ export class ModalComponent {
   }
 
   constructor(private modalService: NgbModal) {
+    
     this.inicializarForm()
   }
 
@@ -179,9 +189,15 @@ export class ModalComponent {
   }
 
   porsentajeIngresadoBlur() {
+    debugger
     let tasaCuota = (this.myFormModal.get('tasaoCuota') as FormControl).value;
     this.tasaCuotaDinamico = tasaCuota
+    this.prueba2 = tasaCuota
   }
 
+  porcentajeMostrado() {
+    let resultado = (this.tasaCuotaDinamico * 100) / this.prueba2
+    return Number.isNaN(resultado) ? 100 : resultado
+  }
 
 }
