@@ -1,0 +1,69 @@
+<div class="col-12 text-end">
+    <button class="btn btn-primary" (click)="openVerticallyCentered(content)">Agregar Impuesto</button>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title ">Impuestos</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body container ">
+        <form action="" [formGroup]="myFormModal">
+            
+            <p class="fw-bold">Los campos con <i class="fa-solid text-danger fa-asterisk"></i> son requeridos.</p>
+                <div class="row row-cols-3  mb-5 justify-content-b ">
+                    <div class="col mb-4">
+                        <label class="">Impuesto</label>
+                        <select class="form-select" (change)="onItemSelectImpuesto($event)" formControlName="impuesto">
+                            <option *ngFor="let impuesto of dropdownImpuesto" [selected]="impuesto.selected"
+                                [value]="impuesto.label">{{impuesto.label}}</option>
+                        </select>
+
+                    </div>
+                    <div class="col mb-4">
+                        <label for=" ">Local o Federal</label>
+                        <select class="form-select" formControlName="federalLocal">
+                            <option *ngFor="let localFederal of dropdownLocaloFederal" [value]="localFederal.label">
+                                {{localFederal.label}}</option>
+                        </select>
+                    </div>
+                    <div class="col mb-4">
+                        <label for=" ">Retención o Traslado </label>
+                        <select class="form-select" formControlName="trasladoRetencion">
+                            <option *ngFor="let retencionTraslado of dropdownRetenOtras"
+                                [value]="retencionTraslado.label">{{retencionTraslado.label}}</option>
+                        </select>
+                    </div>
+                    <div class="col mb-4">
+                        <label for=" ">Tipo Factor</label>
+                        <select class="form-select" (change)="onItemSelectTipoFactor($event)"
+                            formControlName="tipoFactor">
+                            <option *ngFor="let tipoFactor of dropdowntTipoFactor" [value]="tipoFactor.label">
+                                {{tipoFactor.label}}</option>
+                        </select>
+                    </div>
+                    <div class="col mb-4">
+                        <label for=" ">Tasa o Cuota <i class="fa-solid text-danger fa-asterisk"></i></label>
+                        <input type="text" (blur)="porsentajeIngresadoBlur()"
+                            class="form-control" formControlName="tasaoCuota" maxlength="3" [imask]="tasaCuota"
+                            [unmask]="true" >
+                    </div>
+                    <div class="col mb-4">
+
+                    </div>
+
+                    <div class="col mb-4" *ngIf="porcentajeAplicacionTasa">
+                        <label for="customRange3" class="form-label">Porcentaje de Aplicación % {{tasaCuotaDinamico}}</label>
+                        <input type="range" class="form-range" (change)="porcentaje($event)" 
+                        min="0" max="100" value="100">
+                    </div>
+                </div>
+          
+        </form>
+    </div>
+    <div class="modal-footer">
+      
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+        <button type="button" class="imouestosAgregar" (click)="guardarImpuestos()">Agregar Impuesto</button>
+    </div>
+</ng-template>

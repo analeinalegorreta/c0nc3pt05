@@ -1,0 +1,58 @@
+.prueba {
+
+    background: none;
+    color: #706c6c;
+    font-size: 1rem;
+    padding: .6em .3em;
+    border-radius: .4em;
+    outline: none;
+    border: 1px solid var(--color);
+    position: relative;
+    --color: #5757577e;
+
+
+}
+
+
+.prueba2 {
+    transform: translateY(-70%) scale(.7);
+    transform-origin: left top;
+    background-color: #fff;
+    padding: 0% 1% 0% 1%;
+    margin-left: 2%;
+}
+
+
+
+.conceptosAgregar {
+    background-color: #009688;
+    color: #fff;
+    border-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.agregarImpuestoBoton{
+    background-color: #009688;
+    color: #fff;
+    border-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.subtitle-page {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #b2bec3;
+    padding: 10px 0;
+    margin-bottom: 0;
+    color: #57606f;
+}

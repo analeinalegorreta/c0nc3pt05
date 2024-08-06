@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+
+.no-checkbox {
+  .dropdown-btn {
+    .selected-item-container {
+      .selected-item {
+        border: 0px !important;
+        background: #ffffff;
+        background-color: #ffffff !important;
+        color: #212529 !important;
+        max-width: 160px !important;
+
+        &:hover {
+          box-shadow: none !important;
+        }
+
+        span {
+
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          display: block !important;
+        }
+
+        a {
+          display: none !important;
+        }
+      }
+
+    }
+  }
+
+  .dropdown-list {
+
+    ul {
+      &:nth-child(2) {
+        li {
+          div {
+            padding-left: 0 !important;
+
+            &::before {
+              display: none !important;
+            }
+
+            &::after {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.form-control {
+  &.ng-touched {
+    &.ng-invalid {
+      border: 1px solid #DA3544;
+      outline: none;
+
+    }
+  }
+}
+
+ng-multiselect-dropdown {
+  &.ng-touched {
+    &.ng-invalid {
+      .dropdown-btn {
+        border: 1px solid #DA3544 !important;
+      }
+    }
+  }
+
+}
+
+
+.iconoEliminar {
+  justify-content: center;
+  align-items: center;
+  margin-right: 5%;
+  background: none;
+  color: #030303;
+  font-size: 30px;
+}
