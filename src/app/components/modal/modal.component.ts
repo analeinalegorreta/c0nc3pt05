@@ -95,8 +95,10 @@ export class ModalComponent {
       this.tasaCuotaDinamico = 16
       this.porsentajeIngresadoBlur()
     } else {
-      (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null)
+      (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null),
+      (this.myFormModal.get('tipoFactor') as FormControl).setValue(null)
       this.porcentajeAplicacionTasa = false
+      
     }
   }
 
