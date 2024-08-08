@@ -13,30 +13,30 @@
             <p class="fw-bold">Los campos con <i class="fa-solid text-danger fa-asterisk"></i> son requeridos.</p>
             <div class="row row-cols-3  mb-5 justify-content-b ">
                 <div class="col mb-4">
-                    <label class="">Impuesto</label>
-                    <select class="form-select" (change)="onItemSelectImpuesto($event)" formControlName="impuesto">
+                    <label class="">Impuesto <i class="fa-solid text-danger fa-asterisk"></i></label>
+                    <select class="form-select form-control" (change)="onItemSelectImpuesto($event)" formControlName="impuesto">
                         <option *ngFor="let impuesto of dropdownImpuesto" [selected]="impuesto.selected"
                             [value]="impuesto.label">{{impuesto.label}}</option>
                     </select>
 
                 </div>
                 <div class="col mb-4">
-                    <label for=" ">Local o Federal</label>
-                    <select class="form-select" formControlName="federalLocal">
+                    <label for=" ">Local o Federal <i class="fa-solid text-danger fa-asterisk"></i></label>
+                    <select class="form-select form-control" formControlName="federalLocal">
                         <option *ngFor="let localFederal of dropdownLocaloFederal" [value]="localFederal.label">
                             {{localFederal.label}}</option>
                     </select>
                 </div>
                 <div class="col mb-4">
-                    <label for=" ">Retención o Traslado </label>
-                    <select class="form-select" formControlName="trasladoRetencion">
+                    <label for=" ">Retención o Traslado <i class="fa-solid text-danger fa-asterisk"></i></label>
+                    <select class="form-select form-control" formControlName="trasladoRetencion">
                         <option *ngFor="let retencionTraslado of dropdownRetenOtras" [value]="retencionTraslado.label">
                             {{retencionTraslado.label}}</option>
                     </select>
                 </div>
                 <div class="col mb-4">
-                    <label for=" ">Tipo Factor</label>
-                    <select class="form-select" (change)="onItemSelectTipoFactor($event)" formControlName="tipoFactor">
+                    <label for=" ">Tipo Factor <i class="fa-solid text-danger fa-asterisk "></i></label>
+                    <select class="form-select form-control" (change)="onItemSelectTipoFactor($event)" formControlName="tipoFactor">
                         <option *ngFor="let tipoFactor of dropdowntTipoFactor" [value]="tipoFactor.label">
                             {{tipoFactor.label}}</option>
                     </select>

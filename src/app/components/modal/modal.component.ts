@@ -171,10 +171,10 @@ export class ModalComponent {
     this.prueba2=undefined  
 
     this.myFormModal = new FormGroup({
-      impuesto: new FormControl(),
-      federalLocal: new FormControl(),
-      trasladoRetencion: new FormControl(),
-      tipoFactor: new FormControl(),
+      impuesto: new FormControl('', [Validators.required]),
+      federalLocal: new FormControl('', [Validators.required]),
+      trasladoRetencion: new FormControl('', [Validators.required]),
+      tipoFactor: new FormControl('', [Validators.required]),
       tasaoCuota: new FormControl('', [Validators.required]),
       pAplicacion: new FormControl(),
     })
