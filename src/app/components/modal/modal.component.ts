@@ -93,6 +93,7 @@ export class ModalComponent {
       (this.myFormModal.get('tipoFactor') as FormControl).setValue("TASA")
       this.porcentajeAplicacionTasa = true
       this.tasaCuotaDinamico = 16
+      this.porsentajeIngresadoBlur()
     } else {
       (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null)
       this.porcentajeAplicacionTasa = false
@@ -202,7 +203,7 @@ export class ModalComponent {
   }
 
   porsentajeIngresadoBlur() {
-    debugger
+    
     let tasaCuota = (this.myFormModal.get('tasaoCuota') as FormControl).value;
     this.tasaCuotaDinamico = tasaCuota
     this.prueba2 = tasaCuota

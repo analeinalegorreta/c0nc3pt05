@@ -54,9 +54,9 @@
 
                     <div class="col mb-4" *ngIf="porcentajeAplicacionTasa">
                         
-                        <label for="customRange3" class="form-label">Porcentaje de Aplicación % {{porcentajeMostrado()}} </label>
+                        <label for="customRange3" class="form-label">Porcentaje de Aplicación % {{porcentajeMostrado()  | number:'1.0-0'}} </label>
                         <input type="range" class="form-range" (change)="porcentaje($event)" 
-                        min="0" max="100" value="100">
+                        min="1" max="100" value="100">
                     </div>
                 </div>
           

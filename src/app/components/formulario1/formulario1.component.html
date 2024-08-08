@@ -20,7 +20,7 @@
             </div>
             <div class="col mb-4">
                 <label for=" ">Unidad </label>
-                <input type="text" class="form-control " formControlName="unidad">
+                <input type="text" class="form-control " formControlName="unidad" [imask]="unidadConcep" [unmask]="true">
             </div>
             <div class="col mb-4">
                 <label for=" ">Descripcón**</label>
@@ -50,7 +50,7 @@
             </div>
             <div class="col mb-4">
                 <label for=" ">Cuenta Predial**</label>
-                <input type="text" class="form-control " formControlName="cuentaPredial">
+                <input type="text" class="form-control " formControlName="cuentaPredial" [imask]="cPredial" [unmask]="true">
             </div>
             <div class="col mb-4">
                 <label for=" ">Objeto Impuestos*</label>
@@ -150,7 +150,7 @@
                     <td>{{retencion.trasladoRetencion}}</td>
                     <td>{{retencion.tipoFactor}}</td>
                     <td>{{retencion.tasaoCuota}}</td>
-                    <td>{{retencion.pAplicacion}}</td>
+                    <td>{{retencion.pAplicacion}}{{retencion.pAplicacion === "N/A" ? "":"%"}}</td>
                     <td>
                         <button class="btn btn-light" (click)="deleteElementReetenciones($index)"> <i
                                 class="fa-solid fa-circle-xmark iconoEliminar"></i>

@@ -101,7 +101,52 @@ export class Formulario1Component {
         mask: '', // To hide % when entered digits are removed
       },
       {
-        mask: 'num',
+        mask: /^[a-zA-Z0-9]+$/,
+        lazy: false, // Make placeholder always visible
+        blocks: {
+          num: {
+            mask: Number,
+            thousandsSeparator: ',',
+            scale: 6, // digits after decimal
+            signed: true, // allow negative
+            normalizeZeros: false, // appends or removes zeros at ends
+            radix: '.', // fractional delimiter
+            padFractionalZeros: false, // if true, then pads zeros at end to the length of scale
+          },
+        },
+      },
+    ];
+
+    public unidadConcep =
+    [
+      {
+        mask: '', // To hide % when entered digits are removed
+      },
+      {
+        mask: /^[a-zA-Z0-9]+$/,
+        lazy: false, // Make placeholder always visible
+        blocks: {
+          num: {
+            mask: Number,
+            thousandsSeparator: ',',
+            scale: 6, // digits after decimal
+            signed: true, // allow negative
+            normalizeZeros: false, // appends or removes zeros at ends
+            radix: '.', // fractional delimiter
+            padFractionalZeros: false, // if true, then pads zeros at end to the length of scale
+          },
+        },
+      },
+    ];
+
+    
+    public cPredial =
+    [
+      {
+        mask: '', // To hide % when entered digits are removed
+      },
+      {
+        mask: /^[a-zA-Z0-9]+$/,
         lazy: false, // Make placeholder always visible
         blocks: {
           num: {
