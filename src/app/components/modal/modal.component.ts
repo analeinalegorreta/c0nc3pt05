@@ -18,22 +18,23 @@ export class ModalComponent {
 
   private readonly TASA: number = 2;
   public porcentajeAplicacionTasa: boolean = false;
+  public tasaOcuotaOculto: boolean = true;
 
   public tasaOcuota: string;
   public porcentajeTasaoCuota: string
 
   public tasaCuotaDinamico: number
 
-  public prueba2: number 
+  public prueba2: number
 
-  public myFormModal: FormGroup 
+  public myFormModal: FormGroup
 
   public dropdownImpuesto: optionMultiSelect[] = [];
   public dropdownLocaloFederal: optionMultiSelect[] = [];
   public dropdownRetenOtras: optionMultiSelect[] = [];
   public dropdowntTipoFactor: optionMultiSelect[] = [];
 
-  public  show:boolean = false;
+  public show: boolean = false;
 
 
   @Output() myEvent = new EventEmitter<FormGroup>()
@@ -79,8 +80,6 @@ export class ModalComponent {
       { value: 4, label: 'EXENTO', selected: false },
     ];
 
-   
-
   }
 
 
@@ -89,16 +88,17 @@ export class ModalComponent {
     let seleccionado = (item.target as HTMLInputElement).value;
 
     if (seleccionado == "002 IVA") {
-      (this.myFormModal.get('tasaoCuota') as FormControl).setValue("16"),
-      (this.myFormModal.get('tipoFactor') as FormControl).setValue("TASA")
+      this.tasaOcuotaOculto = true,
+        (this.myFormModal.get('tasaoCuota') as FormControl).setValue("16"),
+        (this.myFormModal.get('tipoFactor') as FormControl).setValue("TASA")
       this.porcentajeAplicacionTasa = true
       this.tasaCuotaDinamico = 16
       this.porsentajeIngresadoBlur()
     } else {
       (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null),
-      (this.myFormModal.get('tipoFactor') as FormControl).setValue(null)
+        (this.myFormModal.get('tipoFactor') as FormControl).setValue(null)
       this.porcentajeAplicacionTasa = false
-      
+      this.tasaOcuotaOculto = true
     }
   }
 
@@ -107,13 +107,31 @@ export class ModalComponent {
 
     let seleccionado = (item.target as HTMLInputElement).value;
 
-    if (seleccionado == "TASA") {
-      this.porcentajeAplicacionTasa = true
-    } else {
-      this.porcentajeAplicacionTasa = false,
-        (this.myFormModal.get('pAplicacion') as FormControl).setValue("N/A")
+    if (seleccionado == "EXENTO") {
+
+      (this.myFormModal.get('tasaoCuota') as FormControl).setValidators([]);
+      this.tasaOcuotaOculto = false,
+      (this.myFormModal.get('tasaoCuota') as FormControl).setValue("0")
+      this.porcentajeAplicacionTasa = false
+      this.tasaCuotaDinamico=0
+    } else if (seleccionado == "TASA") {
+      this.tasaOcuotaOculto = true
+      this.porcentajeAplicacionTasa = true,
+        (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null),
+        (this.myFormModal.get('tasaoCuota') as FormControl).setValidators([Validators.required, Validators.min(1), Validators.max(100)])
     }
+    else {
+      this.porcentajeAplicacionTasa = false,
+        (this.myFormModal.get('pAplicacion') as FormControl).setValue("N/A"),
+        (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null),
+        (this.myFormModal.get('tasaoCuota') as FormControl).setValidators([Validators.required, Validators.min(1), Validators.max(100)])
+        this.tasaOcuotaOculto = true
+    }
+
+    console.log(this.myFormModal);
+    
   }
+
 
   onItemSelect(items: any) {
     console.log(items);
@@ -143,15 +161,6 @@ export class ModalComponent {
     if ((this.myFormModal.get('tipoFactor') as FormControl).value != "TASA") {
       (this.myFormModal.get('pAplicacion') as FormControl).setValue("N/A")
     }
-
-    let valorValidotasaoCuota=(this.myFormModal.get('tasaoCuota') as FormControl).value
-    if(valorValidotasaoCuota>100 || valorValidotasaoCuota <1){
-      this.show=true
-      return
-    }else{
-      this.show=false
-    }
-
     this.myEvent.emit(this.myFormModal)
     this.inicializarForm()
     this.modalService.dismissAll()
@@ -164,24 +173,24 @@ export class ModalComponent {
 
 
   inicializarForm() {
-    this.porcentajeAplicacionTasa= false;
-    this.tasaOcuota=undefined
-    this.porcentajeTasaoCuota=undefined
-    this.tasaCuotaDinamico=undefined
-    this.prueba2=undefined  
+    this.porcentajeAplicacionTasa = false;
+    this.tasaOcuota = undefined
+    this.porcentajeTasaoCuota = undefined
+    this.tasaCuotaDinamico = undefined
+    this.prueba2 = undefined
 
     this.myFormModal = new FormGroup({
       impuesto: new FormControl('', [Validators.required]),
       federalLocal: new FormControl('', [Validators.required]),
       trasladoRetencion: new FormControl('', [Validators.required]),
       tipoFactor: new FormControl('', [Validators.required]),
-      tasaoCuota: new FormControl('', [Validators.required]),
+      tasaoCuota: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100)]),
       pAplicacion: new FormControl(),
     })
   }
 
   constructor(private modalService: NgbModal) {
-    
+
     this.inicializarForm()
   }
 
@@ -205,7 +214,7 @@ export class ModalComponent {
   }
 
   porsentajeIngresadoBlur() {
-    
+
     let tasaCuota = (this.myFormModal.get('tasaoCuota') as FormControl).value;
     this.tasaCuotaDinamico = tasaCuota
     this.prueba2 = tasaCuota

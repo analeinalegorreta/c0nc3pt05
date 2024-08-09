@@ -34,6 +34,7 @@
                             {{retencionTraslado.label}}</option>
                     </select>
                 </div>
+               
                 <div class="col mb-4">
                     <label for=" ">Tipo Factor <i class="fa-solid text-danger fa-asterisk "></i></label>
                     <select class="form-select form-control" (change)="onItemSelectTipoFactor($event)" formControlName="tipoFactor">
@@ -42,9 +43,9 @@
                     </select>
                 </div>
                 <div class="col mb-4">
-                    <div >
+                    <div *ngIf="tasaOcuotaOculto">
                         <label>Tasa o Cuota <i class="fa-solid text-danger fa-asterisk"></i></label>
-                        <input type="text" ngbTooltip="Ingrese un valor del 1 al 100."
+                        <input type="text" ngbTooltip="Ingrese un valor del 1 al 100." 
                             (blur)="porsentajeIngresadoBlur()" class="form-control" formControlName="tasaoCuota"
                             maxlength="3" [imask]="tasaCuota" [unmask]="true" value="{{tasaCuotaDinamico}}">
                     </div>
@@ -65,16 +66,17 @@
     </div>
     <div class="modal-footer">
 
-        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+         <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
         <button type="button" class="imouestosAgregar" (click)="guardarImpuestos()">Agregar Impuesto</button>
     </div>
-
+   
 
 </ng-template>
 
+<!-- 
 @if (show) {
 <ngb-toast [autohide]="true" (hidden)="show = false" #dangerTpl style="position: fixed; text-align: center;"
     class="top-0 end-0 bg-danger text-light">
     Ingrese valor del 1 al 100.
 </ngb-toast>
-}
+} -->
