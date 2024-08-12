@@ -35,8 +35,7 @@ export class Formulario1Component {
 
 
   public dropdownNivelEducativo: optionMultiSelect[] = [];
-  public selectedItemsNivelEducativo: any = [];
-  public dropdownSettingsNivelEducativo: IDropdownSettings = {};
+
 
   public load = true
 
@@ -68,7 +67,16 @@ export class Formulario1Component {
     }),
     cuentaPredial: new FormControl('', [Validators.required]),
     informacionAduanera: new FormControl(),
-    complementos: new FormControl(),
+    complementosConcepto: new FormGroup({
+      iedu: new FormGroup({
+        nombreAlumno: new FormControl(),
+        curp: new FormControl(),
+        nivelEducativo: new FormControl(),
+        autRVOE: new FormControl(),
+        rfcPago: new FormControl(),
+      }),
+
+    }),
     cuentaTerceros: new FormControl(),
 
   })
@@ -117,7 +125,7 @@ export class Formulario1Component {
       },
     ];
 
-    public unidadConcep =
+  public unidadConcep =
     [
       {
         mask: '', // To hide % when entered digits are removed
@@ -139,8 +147,8 @@ export class Formulario1Component {
       },
     ];
 
-    
-    public cPredial =
+
+  public cPredial =
     [
       {
         mask: '', // To hide % when entered digits are removed
@@ -221,40 +229,68 @@ export class Formulario1Component {
       }
     ];
 
+validaconesIEDU(){
+  (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([Validators.required]),
+  (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([Validators.required]),
+  (this.myForm.get('complementosConcepto.iedu.nivelEducativo') as FormControl).setValidators([Validators.required]),
+  (this.myForm.get('complementosConcepto.iedu.autRVOE') as FormControl).setValidators([Validators.required]),
+  (this.myForm.get('complementosConcepto.iedu.rfcPago') as FormControl).setValidators([Validators.required])
+} 
+
+SinvalidaconesIEDU(){
+  
+  (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([]),
+  (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([]),
+  (this.myForm.get('complementosConcepto.iedu.nivelEducativo') as FormControl).setValidators([]),
+  (this.myForm.get('complementosConcepto.iedu.autRVOE') as FormControl).setValidators([]),
+  (this.myForm.get('complementosConcepto.iedu.rfcPago') as FormControl).setValidators([])
+} 
 
 
 
   onItemSelectIEDU(item: any) {
     let seleccionado = item as optionMultiSelect
     if (seleccionado.value == 1) {
-      this.mostrarApartadoIEDU = true
+      this.mostrarApartadoIEDU = true,
+      this.validaconesIEDU()
     }
   }
 
   onItemDeSelectIEDU(item: any) {
+
     let seleccionado = item as optionMultiSelect
     if (seleccionado.value == 1) {
       this.mostrarApartadoIEDU = false
+      this.SinvalidaconesIEDU()
     }
   }
 
   onSelectAllIEDU(item: any) {
-    this.mostrarApartadoIEDU = true
+    this.mostrarApartadoIEDU = true,
+    this.validaconesIEDU()
   }
 
   onDeSelectAllIEDU(item: any) {
     this.mostrarApartadoIEDU = false
+    this.SinvalidaconesIEDU()
   }
 
-  mostrarTablaImpuestos(item:any) {
- 
-   let seleccionado = (item.target as HTMLInputElement).value;
-    if ( '01 No objeto de impuesto' == seleccionado) {
+  mostrarTablaImpuestos(item: any) {
+
+    let seleccionado = (item.target as HTMLInputElement).value;
+    if ('01 No objeto de impuesto' == seleccionado) {
       this.mostrarApartadoImpuestos = false
-    }else{
+    } else {
       this.mostrarApartadoImpuestos = true
     }
   }
+
+  // onItemSelectClaveUni(item: any){
+  // let claveUni= item as optionMultiSelect
+
+  //   (this.myForm.get('claveUnidad') as FormControl).setValue(claveUni.value)
+  //(onSelect)="onItemSelectClaveUni($event)"
+  // }
 
 
   onItemSelect(items: any) {
@@ -283,25 +319,37 @@ export class Formulario1Component {
 
 
   guardar() {
-    
+
+    // if( this.mostrarApartadoIEDU == false){
+    //   this.SinvalidaconesIEDU()
+    // }
+
     this.myForm.markAllAsTouched();
-    if(this.myForm.invalid)return;
+    if (this.myForm.invalid) return;
     let concepto = new Concepto()
     concepto.cantidad = this.myForm.get('cantidad')!.value
     concepto.claveUnidad = this.myForm.get('claveUnidad')!.value
     concepto.unidad = this.myForm.get('unidad')!.value
     concepto.noIdentificacion = this.myForm.get('noIdentificacion')!.value
     concepto.descripcion = this.myForm.get('descripcion')!.value,
-      concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
+    concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
     concepto.descuento = this.myForm.get('descuento')!.value
     concepto.claveProdServ = this.myForm.get('claveProdServ')!.value
     concepto.objetoImp = this.myForm.get('objetoImp')!.value
     let cantidadNumeroca = Number(concepto.cantidad)
     concepto.importe = concepto.valorUnitario * cantidadNumeroca
+    
+    concepto.complementosConcepto.iedu.nombreAlumno = this.myForm.get('complementosConcepto.iedu.nombreAlumno')!.value
+    concepto.complementosConcepto.iedu.curp = this.myForm.get('complementosConcepto.iedu.curp')!.value
+    concepto.complementosConcepto.iedu.nivelEducativo = this.myForm.get('complementosConcepto.iedu.nivelEducativo')!.value
+    concepto.complementosConcepto.iedu.autRVOE = this.myForm.get('complementosConcepto.iedu.autRVOE')!.value
+    concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
+    console.log(this.myForm.value);
+    
     this.myEvent.emit(concepto)
   }
 
- 
+
   guardarImpuestos(formImpuesto: FormGroup) {
 
     if (formImpuesto.value['impuesto'] === 'Traslados') {
@@ -361,18 +409,7 @@ export class Formulario1Component {
       allowSearchFilter: false,
     }
 
-    this.dropdownSettingsNivelEducativo = {
-      singleSelection: true,
-      idField: 'value',
-      textField: 'label',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      limitSelection: 7,
-      enableCheckAll: true,
-      closeDropDownOnSelection: true,
-      allowSearchFilter: false
-    }
+
 
 
     this.dropdownObjetoImpuesto = [

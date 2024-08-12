@@ -14,7 +14,7 @@
                 <label for=" ">Clave Unidad**</label>
                 @if(dropdownConsulta.length>0){
                 <ng-multiselect-dropdown formControlName="claveUnidad" [placeholder]="''" class="no-checkbox  "
-                    [settings]="dropdownSettingsConsulta" [data]="dropdownConsulta">
+                   [settings]="dropdownSettingsConsulta" [data]="dropdownConsulta">
                 </ng-multiselect-dropdown>
                 }
             </div>
@@ -63,7 +63,7 @@
             <div class="col mb-4">
                 <label for=" ">Complementos</label>
 
-                <ng-multiselect-dropdown formControlName="complementos" [placeholder]="" [settings]="dropdownSettingsIEDU"
+                <ng-multiselect-dropdown  [placeholder]="" [settings]="dropdownSettingsIEDU"
                     [data]="dropdownIEDU " (onDeSelect)="onItemDeSelectIEDU($event)"
                     (onSelect)="onItemSelectIEDU($event)" (onDeSelectAll)="onDeSelectAllIEDU($event)"
                     (onSelectAll)="onSelectAllIEDU($event)">
@@ -74,32 +74,33 @@
     </div>
 
 
-    <div class="container " id="IEDU" class="mb-3" *ngIf="mostrarApartadoIEDU">
+    <div class="container " formGroupName="complementosConcepto" id="IEDU" class="mb-3" *ngIf="mostrarApartadoIEDU">
         <div class="prueba">
             <label for="e" class="prueba2">IEDU</label>
-            <div class="row row-cols-3  mb-5 justify-content-b ">
+            <div class="row row-cols-3  mb-5 justify-content-b "  formGroupName="iedu">
                 <div class="col mb-4">
                     <label for=" " class="">Nombre Alumno*</label>
-                    <input type="text" class="form-control " [imask]="nomAlumno" [unmask]="true">
+                    <input type="text" class="form-control " formControlName="nombreAlumno" [imask]="nomAlumno" [unmask]="true">
                 </div>
                 <div class="col mb-4">
                     <label for=" ">CURP*</label>
-                    <input type="text" class="form-control " oninput="this.value = this.value.toUpperCase()"
+                    <input type="text" ngbTooltip="Ingrese formato CURP." class="form-control " formControlName="curp" oninput="this.value = this.value.toUpperCase()"
                         maxlength="18" placeholder="" [imask]="{mask:'aaaa000000aaaaaa00'}" [unmask]="true">
                 </div>
                 <div class="col mb-4">
                     <label for=" ">Nivel Educativo*</label>
-                    <ng-multiselect-dropdown formControlName="objetoImp" [placeholder]="" class="no-checkbox"
-                        [settings]="dropdownSettingsNivelEducativo" [data]="dropdownNivelEducativo ">
-                    </ng-multiselect-dropdown>
+                    <select class="form-select form-control"  formControlName="nivelEducativo">
+                        <option *ngFor="let nivelEducativo of dropdownNivelEducativo" [value]="nivelEducativo.label">
+                            {{nivelEducativo.label}}</option>
+                    </select>
                 </div>
                 <div class="col mb-4">
                     <label for=" ">Autorización / Validez Oficial*</label>
-                    <input type="text" class="form-control ">
+                    <input type="text" class="form-control " formControlName="autRVOE">
                 </div>
                 <div class="col mb-4">
                     <label for=" ">RFC Pago</label>
-                    <input type="text" class="form-control " maxlength="18" [imask]="RFC" [unmask]="true">
+                    <input type="text" ngbTooltip="Ingrese formato RFC." formControlName="rfcPago" class="form-control " maxlength="18" [imask]="RFC" [unmask]="true">
                 </div>
             </div>
         </div>
