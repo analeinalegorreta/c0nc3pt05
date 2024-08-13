@@ -1,0 +1,47 @@
+<div>
+    <label for="e" class="margen2">Cargos no facturables</label>
+    <form action="" [formGroup]="myFormCargos" (ngSubmit)="onSubmit()" >
+        <div class="row mx-auto">
+            <div class="col-4">
+                <label for="">Cargo*</label>
+                <input type="text" formControlName="cargo" class="form-control ">
+            </div>
+            <div class="col-4">
+                <label for="">Importe*</label>
+                <input  formControlName="importe" class="form-control "
+                maxlength="17"
+                [imask]="importeValidacion" [unmask]="true">
+            </div>
+            <div class="col-4">
+                <button type="submit" class="cargosFactu mt-3">Agregar</button>
+            </div>
+
+            <div class="col">
+                @if (load) {
+                <table datatable [dtOptions]="dtOptions" class="row-border hover" >
+                    <thead>
+                        <tr>
+                            <th>Cargo</th>
+                            <th>Importe</th>
+                            <th>Eliminar</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (cargoNoFacturable of cargosNoFacturables; track $index) {
+                        <tr>
+                            <td>{{cargoNoFacturable.cargo}}</td>
+                            <td>{{cargoNoFacturable.importe}}</td>
+                            <td>
+                      <button class="btn btn-light" (click)="deleteElement($index)"> <i class="fa-solid fa-circle-xmark iconoEliminar"></i>
+                      </button>
+                  </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            </div>
+        </div>
+    </form>
+</div>

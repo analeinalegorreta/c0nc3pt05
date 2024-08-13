@@ -85,7 +85,7 @@
                 <div class="col mb-4">
                     <label for=" ">CURP*</label>
                     <input type="text" ngbTooltip="Ingrese formato CURP." class="form-control " formControlName="curp" oninput="this.value = this.value.toUpperCase()"
-                        maxlength="18" placeholder="" [imask]="{mask:'aaaa000000aaaaaa00'}" [unmask]="true">
+                     minlength="18" placeholder="" [imask]="{mask:'aaaa000000aaaaaa00'}" [unmask]="true">
                 </div>
                 <div class="col mb-4">
                     <label for=" ">Nivel Educativo*</label>

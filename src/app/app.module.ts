@@ -11,13 +11,15 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './components/modal/modal.component';
+import { CargosNoFacturablesComponent } from './components/cargos-no-facturables/cargos-no-facturables.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     Formulario1Component,
-    ModalComponent
+    ModalComponent,
+    CargosNoFacturablesComponent
   ],
   imports: [
     BrowserModule,

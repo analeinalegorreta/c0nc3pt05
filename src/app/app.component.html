@@ -43,55 +43,18 @@
   <div class="container " id="" class="mb-3">
     <div class="row">
       <div class="col margen">
-        <label for="e" class="margen2">Cargos no facturables</label>
-        <div class="row">
-          <div class="col-4">
-            <label for="">Cargo*</label>
-            <input type="text" class="form-control " >
-          </div>
-          <div class="col-4">
-            <label for="">Importe*</label>
-            <input type="text" class="form-control " >
-          </div>
-          <div class="col-4">
-            <button type="submit" class="cargosFactu">Agregar</button>
-          </div>
-          <div class="col">
-            
-            <table datatable [dtOptions]="dtOptions" class="row-border hover" id="impuestos-tabla">
-              <thead>
-                  <tr>
-                      <th>Cargo</th>
-                      <th>Importe</th>
-                      <th>Eliminar</th>
-             
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>1</td>
-                      <td>Foo</td>
-                      <td>Bar</td>
-                   
-                      <!-- <td>
-                          <button class="btn btn-light" (click)="deleteElement($index)"> <i class="fa-solid fa-circle-xmark iconoEliminar"></i>
-                          </button>
-                      </td> -->
-                  </tr>
-              </tbody>
-          </table>
-          </div>
-        </div>
+      <app-cargos-no-facturables></app-cargos-no-facturables>
+
       </div>
       <div class="col">
         <label for="">SubTotal</label>
         <input type="text" class="form-control">
         <label for="">Descuento</label>
-        <input type="text" class="form-control" >
+        <input type="text" class="form-control">
         <label for="">Total</label>
-        <input type="text" class="form-control" >
+        <input type="text" class="form-control">
         <label for="">Gran Total</label>
-        <input type="text" class="form-control" >
+        <input type="text" class="form-control">
       </div>
     </div>
 

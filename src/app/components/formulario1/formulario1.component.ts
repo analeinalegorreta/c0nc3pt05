@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConceptosService } from '../../services/conceptos.service';
-import { IDropdownSettings, MultiSelectComponent } from 'ng-multiselect-dropdown';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Concepto } from '../../class/conceptos.class';
 import { Config } from 'datatables.net';
 
