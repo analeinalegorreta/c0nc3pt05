@@ -34,6 +34,13 @@ this.conceptos.splice(index, 1)
   };
 
 
+  subTotal(){
+    let SubTotal=0
+   for(let a=0;a<this.conceptos.length;a++){
+     SubTotal += this.conceptos[a].importe
+   }
+   return SubTotal
+  }
 
 
 
