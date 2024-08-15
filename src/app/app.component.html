@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <app-formulario1 (myEvent)="datosConceptos($event)"></app-formulario1>
-  @if (load) {
+  @if (loadConceptos) {
   <table datatable [dtOptions]="dtOptions" class="row-border hover" id="conceptos">
     <thead>
       <tr>
@@ -40,24 +40,55 @@
   }
 
 
-  <div class="container " id="" class="mb-3">
+  <div class="container" id="" class="mb-3">
     <div class="row">
       <div class="col margen">
-      <app-cargos-no-facturables></app-cargos-no-facturables>
-
+        <app-cargos-no-facturables (myEvent)="datosCargosNofacturables($event)"></app-cargos-no-facturables>
       </div>
       <div class="col">
-        <label for="">SubTotal</label>
-        <input type="text" class="form-control" [value]=subTotal()>
-        <label for="">Descuento</label>
-        <input type="text" class="form-control">
-        <label for="">Total</label>
-        <input type="text" class="form-control">
-        <label for="">Gran Total</label>
-        <input type="text" class="form-control">
+        <div class="row bordeTotales" >
+          <div class="col-sm-6 px-3 py-2 pb-1 marguinTotales" >
+            <label for="" class="text-center ">SubTotal</label>
+          </div>
+          <div class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
+            <label for="">{{subTotal() | currency}}</label>
+          </div>
+          <div class="col-6 p-3">
+            <label for="" class="col-sm-6 px-3 py-2 pb-1 marguinTotales">Descuento</label>
+          </div>
+          <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
+            <label for="">{{subTotal() | currency}}</label>
+          </div>
+          <div class="col-6 p-3">
+            <label for="" class="col-sm-6 px-3 py-2 pb-1 marguinTotales">Total</label>
+          </div>
+          <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
+            <label for="">{{subTotal() | currency}}</label>
+          </div>
+          <div class="col-6 p-3">
+            <label for="" class="col-sm-6 px-3 py-2 pb-1 marguinTotales">Gran Total</label>
+          </div>
+          <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
+            <label for="">{{subTotal() | currency}}</label>
+          </div>
+        </div>
       </div>
+      <!-- <label for="">SubTotal</label><br>
+        <label for="">{{subTotal() | currency}}</label><br>
+        <label for="">Descuento</label>
+        <input type="text" class="form-control" [value]=descuento()>
+        <label for="">Total</label>
+        <input type="text" class="form-control" [value]=total()>
+        <label for="">Gran Total</label>
+        <input type="text" class="form-control" [value]=granTotal()> -->
     </div>
-
   </div>
 
 </div>
+
+
+
+
+
+<!-- <label for="">Total</label>
+<label for="">Gran Total</label> -->

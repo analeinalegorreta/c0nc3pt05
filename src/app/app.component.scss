@@ -14,3 +14,26 @@
 }
 
 
+.marguinTotales{
+
+        color: #706c6c;
+        font-size: 1rem;
+        padding: .6em .3em;
+     
+      
+  border-bottom: 1px solid var(--color);
+        --color: #5757577e;
+}
+
+
+.bordeTotales{
+    background: none;
+    color: #706c6c;
+    font-size: 1rem;
+  
+    border-radius: .4em;
+    outline: none;
+    border: 1px solid var(--color);
+    position: relative;
+    --color: #5757577e;
+}

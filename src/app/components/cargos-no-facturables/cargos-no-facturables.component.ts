@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Config } from 'datatables.net';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CargosNoFacturable } from '../../class/cargosNoFacturables.class';
@@ -17,6 +17,7 @@ export class CargosNoFacturablesComponent {
     cargo: new FormControl('', [Validators.required]),
     importe: new FormControl<number | null>(null, [Validators.required])
   })
+  @Output() myEvent = new EventEmitter<CargosNoFacturable[]>()
 
   public importeValidacion =
     [
@@ -78,6 +79,7 @@ export class CargosNoFacturablesComponent {
         if (this.myFormCargos.invalid) return;  
         this.datoscargosNoFacturable(this.myFormCargos.value as CargosNoFacturable)
         this.myFormCargos.reset();
+        this.myEvent.emit(this.cargosNoFacturables)
       }
 
 

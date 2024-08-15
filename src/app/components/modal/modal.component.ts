@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 
 interface optionMultiSelect {
   value: number,

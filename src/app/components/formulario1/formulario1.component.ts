@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConceptosService } from '../../services/conceptos.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Concepto } from '../../class/conceptos.class';
@@ -19,11 +19,10 @@ export class Formulario1Component {
 
   constructor(private ConceptosService: ConceptosService) { }
 
-
   public mostrarApartadoImpuestos: boolean = false;
   public mostrarApartadoIEDU: boolean = false;
 
-  public dropdownConsulta: any = [];
+  public dropdownConsultaClaveServicio: any = [];
   public selectedItemsConsulta: any = [];
   public dropdownSettingsConsulta: IDropdownSettings = {};
 
@@ -33,13 +32,9 @@ export class Formulario1Component {
   public selectedItemsIEDU: any = [];
   public dropdownSettingsIEDU: IDropdownSettings = {};
 
-
   public dropdownNivelEducativo: optionMultiSelect[] = [];
 
-
-  public load = true
-
-
+  public loadImpuestos = true
 
   @Output() myEvent = new EventEmitter<Concepto>()
 
@@ -75,7 +70,6 @@ export class Formulario1Component {
         autRVOE: new FormControl(),
         rfcPago: new FormControl(),
       }),
-
     }),
     cuentaTerceros: new FormControl(),
 
@@ -109,7 +103,7 @@ export class Formulario1Component {
         mask: '', // To hide % when entered digits are removed
       },
       {
-        mask: /^[a-zA-Z0-9]+$/,
+        mask: 'num',
         lazy: false, // Make placeholder always visible
         blocks: {
           num: {
@@ -229,22 +223,22 @@ export class Formulario1Component {
       }
     ];
 
-validaconesIEDU(){
-  (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([Validators.required]),
-  (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([Validators.required]),
-  (this.myForm.get('complementosConcepto.iedu.nivelEducativo') as FormControl).setValidators([Validators.required]),
-  (this.myForm.get('complementosConcepto.iedu.autRVOE') as FormControl).setValidators([Validators.required]),
-  (this.myForm.get('complementosConcepto.iedu.rfcPago') as FormControl).setValidators([Validators.required])
-} 
+  validaconesIEDU() {
+    (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([Validators.required]),
+      (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([Validators.required]),
+      (this.myForm.get('complementosConcepto.iedu.nivelEducativo') as FormControl).setValidators([Validators.required]),
+      (this.myForm.get('complementosConcepto.iedu.autRVOE') as FormControl).setValidators([Validators.required]),
+      (this.myForm.get('complementosConcepto.iedu.rfcPago') as FormControl).setValidators([Validators.required])
+  }
 
-SinvalidaconesIEDU(){
-  
-  (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([]),
-  (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([]),
-  (this.myForm.get('complementosConcepto.iedu.nivelEducativo') as FormControl).setValidators([]),
-  (this.myForm.get('complementosConcepto.iedu.autRVOE') as FormControl).setValidators([]),
-  (this.myForm.get('complementosConcepto.iedu.rfcPago') as FormControl).setValidators([])
-} 
+  SinvalidaconesIEDU() {
+
+    (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([]),
+      (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([]),
+      (this.myForm.get('complementosConcepto.iedu.nivelEducativo') as FormControl).setValidators([]),
+      (this.myForm.get('complementosConcepto.iedu.autRVOE') as FormControl).setValidators([]),
+      (this.myForm.get('complementosConcepto.iedu.rfcPago') as FormControl).setValidators([])
+  }
 
 
 
@@ -252,7 +246,7 @@ SinvalidaconesIEDU(){
     let seleccionado = item as optionMultiSelect
     if (seleccionado.value == 1) {
       this.mostrarApartadoIEDU = true,
-      this.validaconesIEDU()
+        this.validaconesIEDU()
     }
   }
 
@@ -267,7 +261,7 @@ SinvalidaconesIEDU(){
 
   onSelectAllIEDU(item: any) {
     this.mostrarApartadoIEDU = true,
-    this.validaconesIEDU()
+      this.validaconesIEDU()
   }
 
   onDeSelectAllIEDU(item: any) {
@@ -285,13 +279,18 @@ SinvalidaconesIEDU(){
     }
   }
 
-  // onItemSelectClaveUni(item: any){
-  // let claveUni= item as optionMultiSelect
+  onItemSelectClaveUni() {
+    console.log(this.myForm.value['claveUnidad'][0].value);
 
-  //   (this.myForm.get('claveUnidad') as FormControl).setValue(claveUni.value)
-  //(onSelect)="onItemSelectClaveUni($event)"
-  // }
+    // let claveUni = item as optionMultiSelect
+    // console.log(claveUni);
 
+    // this.myForm.controls['claveUnidad'].setValue(claveUni.value);
+
+
+    // (onSelect)="onItemSelectClaveUni($event)"
+
+  }
 
   onItemSelect(items: any) {
     console.log(items);
@@ -306,11 +305,10 @@ SinvalidaconesIEDU(){
     var sinSimbolos = sinEspacios.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
     if (sinSimbolos.length >= 3) {
       this.ConceptosService.getProdBusqueda(event).subscribe(resp => {
-        console.log(resp);
         resp.forEach((elem) => {
-          this.dropdownConsulta.push({
+          this.dropdownConsultaClaveServicio.push({
             label: elem.cClaveProdServ + ' - ' + elem.descripcion,
-            value: elem.id
+            value: elem.cClaveProdServ
           })
         })
       })
@@ -319,11 +317,6 @@ SinvalidaconesIEDU(){
 
 
   guardar() {
-
-    // if( this.mostrarApartadoIEDU == false){
-    //   this.SinvalidaconesIEDU()
-    // }
-
     this.myForm.markAllAsTouched();
     if (this.myForm.invalid) return;
     let concepto = new Concepto()
@@ -332,23 +325,22 @@ SinvalidaconesIEDU(){
     concepto.unidad = this.myForm.get('unidad')!.value
     concepto.noIdentificacion = this.myForm.get('noIdentificacion')!.value
     concepto.descripcion = this.myForm.get('descripcion')!.value,
-    concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
-    concepto.descuento = this.myForm.get('descuento')!.value
+      concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
+    concepto.descuento = Number(this.myForm.get('descuento')!.value)
     concepto.claveProdServ = this.myForm.get('claveProdServ')!.value
     concepto.objetoImp = this.myForm.get('objetoImp')!.value
     let cantidadNumeroca = Number(concepto.cantidad)
     concepto.importe = concepto.valorUnitario * cantidadNumeroca
-    
+
     concepto.complementosConcepto.iedu.nombreAlumno = this.myForm.get('complementosConcepto.iedu.nombreAlumno')!.value
     concepto.complementosConcepto.iedu.curp = this.myForm.get('complementosConcepto.iedu.curp')!.value
     concepto.complementosConcepto.iedu.nivelEducativo = this.myForm.get('complementosConcepto.iedu.nivelEducativo')!.value
     concepto.complementosConcepto.iedu.autRVOE = this.myForm.get('complementosConcepto.iedu.autRVOE')!.value
     concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
     console.log(this.myForm.value);
-    
+
     this.myEvent.emit(concepto)
   }
-
 
   guardarImpuestos(formImpuesto: FormGroup) {
 
@@ -358,13 +350,12 @@ SinvalidaconesIEDU(){
       this.retenciones().push(formImpuesto);
     }
 
-    this.load = false;
+    this.loadImpuestos = false;
     setTimeout(() => {
-      this.load = true;
+      this.loadImpuestos = true;
     }, 200);
 
   }
-
 
   public traslados(): FormArray {
     return this.myForm.get('impuestos.traslados') as FormArray;
@@ -378,9 +369,9 @@ SinvalidaconesIEDU(){
 
     this.ConceptosService.getProd().subscribe(resp => {
       resp.forEach((elem) => {
-        this.dropdownConsulta.push({
+        this.dropdownConsultaClaveServicio.push({
           label: elem.cClaveProdServ + ' - ' + elem.descripcion,
-          value: elem.id
+          value: elem.cClaveProdServ
         })
       })
 
@@ -409,9 +400,6 @@ SinvalidaconesIEDU(){
       allowSearchFilter: false,
     }
 
-
-
-
     this.dropdownObjetoImpuesto = [
       { value: 1, label: '01 No objeto de impuesto' },
       { value: 2, label: '02 Si objeto de impuesto' },
@@ -419,7 +407,6 @@ SinvalidaconesIEDU(){
       { value: 4, label: '04 Sí objeto de impuesto y no causa impuesto' },
       { value: 5, label: '05 Sí objeto de impuesto, IVA crédito PODEBI ' }
     ];
-
 
     this.dropdownIEDU = [
       { value: 1, label: 'IEDU' },

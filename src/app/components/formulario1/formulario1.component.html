@@ -1,26 +1,28 @@
 <p class="subtitle-page  mb-3">
     Conceptos
 </p>
-<form action="" [formGroup]="myForm" >
+<form action="" [formGroup]="myForm">
 
     <div class="container ">
         <div class="row row-cols-5 mb-5">
             <div class="col mb-4">
                 <label for=" ">Cantidad**</label>
-                <input type="text" formControlName="cantidad" class="form-control" maxlength="24"
+                <input type="text" formControlName="cantidad" class="form-control" maxlength="15"
                     [imask]="cantidadConcep" [unmask]="true">
             </div>
             <div class="col mb-4">
                 <label for=" ">Clave Unidad**</label>
-                @if(dropdownConsulta.length>0){
+                @if(dropdownConsultaClaveServicio.length>0){
                 <ng-multiselect-dropdown formControlName="claveUnidad" [placeholder]="''" class="no-checkbox  "
-                   [settings]="dropdownSettingsConsulta" [data]="dropdownConsulta">
+                    [settings]="dropdownSettingsConsulta" [data]="dropdownConsultaClaveServicio"
+                    (onSelect)="onItemSelectClaveUni()">
                 </ng-multiselect-dropdown>
                 }
             </div>
             <div class="col mb-4">
                 <label for=" ">Unidad </label>
-                <input type="text" class="form-control " formControlName="unidad" [imask]="unidadConcep" [unmask]="true">
+                <input type="text" class="form-control " formControlName="unidad" [imask]="unidadConcep"
+                    [unmask]="true">
             </div>
             <div class="col mb-4">
                 <label for=" ">Descripcón**</label>
@@ -28,9 +30,9 @@
             </div>
             <div class="col mb-4">
                 <label for=" ">Clave Producto/Servicio**</label>
-                @if(dropdownConsulta.length>0){
+                @if(dropdownConsultaClaveServicio.length>0){
                 <ng-multiselect-dropdown formControlName="claveProdServ" [placeholder]="'claveProdServ'"
-                    class="no-checkbox  " [settings]="dropdownSettingsConsulta" [data]="dropdownConsulta">
+                    class="no-checkbox  " [settings]="dropdownSettingsConsulta" [data]="dropdownConsultaClaveServicio">
                 </ng-multiselect-dropdown>
                 }
             </div>
@@ -50,7 +52,8 @@
             </div>
             <div class="col mb-4">
                 <label for=" ">Cuenta Predial**</label>
-                <input type="text" class="form-control " formControlName="cuentaPredial" [imask]="cPredial" [unmask]="true">
+                <input type="text" class="form-control " formControlName="cuentaPredial" [imask]="cPredial"
+                    [unmask]="true">
             </div>
             <div class="col mb-4">
                 <label for=" ">Objeto Impuestos*</label>
@@ -63,10 +66,9 @@
             <div class="col mb-4">
                 <label for=" ">Complementos</label>
 
-                <ng-multiselect-dropdown  [placeholder]="" [settings]="dropdownSettingsIEDU"
-                    [data]="dropdownIEDU " (onDeSelect)="onItemDeSelectIEDU($event)"
-                    (onSelect)="onItemSelectIEDU($event)" (onDeSelectAll)="onDeSelectAllIEDU($event)"
-                    (onSelectAll)="onSelectAllIEDU($event)">
+                <ng-multiselect-dropdown [placeholder]="" [settings]="dropdownSettingsIEDU" [data]="dropdownIEDU "
+                    (onDeSelect)="onItemDeSelectIEDU($event)" (onSelect)="onItemSelectIEDU($event)"
+                    (onDeSelectAll)="onDeSelectAllIEDU($event)" (onSelectAll)="onSelectAllIEDU($event)">
                 </ng-multiselect-dropdown>
 
             </div>
@@ -77,19 +79,21 @@
     <div class="container " formGroupName="complementosConcepto" id="IEDU" class="mb-3" *ngIf="mostrarApartadoIEDU">
         <div class="prueba">
             <label for="e" class="prueba2">IEDU</label>
-            <div class="row row-cols-3  mb-5 justify-content-b "  formGroupName="iedu">
+            <div class="row row-cols-3  mb-5 justify-content-b " formGroupName="iedu">
                 <div class="col mb-4">
                     <label for=" " class="">Nombre Alumno*</label>
-                    <input type="text" class="form-control " formControlName="nombreAlumno" [imask]="nomAlumno" [unmask]="true">
+                    <input type="text" class="form-control " formControlName="nombreAlumno" [imask]="nomAlumno"
+                        [unmask]="true">
                 </div>
                 <div class="col mb-4">
                     <label for=" ">CURP*</label>
-                    <input type="text" ngbTooltip="Ingrese formato CURP." class="form-control " formControlName="curp" oninput="this.value = this.value.toUpperCase()"
-                     minlength="18" placeholder="" [imask]="{mask:'aaaa000000aaaaaa00'}" [unmask]="true">
+                    <input type="text" ngbTooltip="Ingrese formato CURP." class="form-control " formControlName="curp"
+                        oninput="this.value = this.value.toUpperCase()" minlength="18" placeholder=""
+                        [imask]="{mask:'aaaa000000aaaaaa00'}" [unmask]="true">
                 </div>
                 <div class="col mb-4">
                     <label for=" ">Nivel Educativo*</label>
-                    <select class="form-select form-control"  formControlName="nivelEducativo">
+                    <select class="form-select form-control" formControlName="nivelEducativo">
                         <option *ngFor="let nivelEducativo of dropdownNivelEducativo" [value]="nivelEducativo.label">
                             {{nivelEducativo.label}}</option>
                     </select>
@@ -100,7 +104,8 @@
                 </div>
                 <div class="col mb-4">
                     <label for=" ">RFC Pago</label>
-                    <input type="text" ngbTooltip="Ingrese formato RFC." formControlName="rfcPago" class="form-control " maxlength="18" [imask]="RFC" [unmask]="true">
+                    <input type="text" ngbTooltip="Ingrese formato RFC." formControlName="rfcPago" class="form-control "
+                        maxlength="13" [imask]="RFC" [unmask]="true">
                 </div>
             </div>
         </div>
@@ -113,7 +118,7 @@
                 <app-modal (myEvent)="guardarImpuestos($event)"></app-modal>
             </div>
         </div>
-        @if (load) {
+        @if (loadImpuestos) {
         <table datatable [dtOptions]="dtOptions" class="row-border hover" id="impuestos-tabla">
             <thead>
 
@@ -163,10 +168,5 @@
         </table>
         }
     </div>
-
-
     <button class="conceptosAgregar" (click)="guardar()">Agregar</button>
-
-
-
 </form>
