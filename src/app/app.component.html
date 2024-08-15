@@ -53,23 +53,23 @@
           <div class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
             <label for="">{{subTotal() | currency}}</label>
           </div>
-          <div class="col-6 p-3">
-            <label for="" class="col-sm-6 px-3 py-2 pb-1 marguinTotales">Descuento</label>
+          <div class="col-sm-6 px-3 py-2 pb-1 marguinTotales">
+            <label for=""  class="text-center ">Descuento</label>
           </div>
           <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
-            <label for="">{{subTotal() | currency}}</label>
+            <label for="">{{descuento() | currency}}</label>
           </div>
-          <div class="col-6 p-3">
-            <label for="" class="col-sm-6 px-3 py-2 pb-1 marguinTotales">Total</label>
-          </div>
-          <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
-            <label for="">{{subTotal() | currency}}</label>
-          </div>
-          <div class="col-6 p-3">
-            <label for="" class="col-sm-6 px-3 py-2 pb-1 marguinTotales">Gran Total</label>
+          <div class="col-sm-6 px-3 py-2 pb-1 marguinTotales">
+            <label for=""  class="text-center ">Total</label>
           </div>
           <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
-            <label for="">{{subTotal() | currency}}</label>
+            <label for="">{{total() | currency}}</label>
+          </div>
+          <div class="col-sm-6 px-3 py-2 pb-1 marguinTotales">
+            <label for=""  class="text-center ">Gran Total</label>
+          </div>
+          <div  class="col-sm-6 px-3 py-2 marguinTotales fw-bold">
+            <label for="">{{granTotal() | currency}}</label>
           </div>
         </div>
       </div>
