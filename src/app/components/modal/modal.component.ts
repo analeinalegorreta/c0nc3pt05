@@ -34,7 +34,7 @@ export class ModalComponent {
   public dropdownRetenOtras: optionMultiSelect[] = [];
   public dropdowntTipoFactor: optionMultiSelect[] = [];
 
-  public show: boolean = false;
+
 
 
   @Output() myEvent = new EventEmitter<FormGroup>()

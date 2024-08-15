@@ -170,3 +170,12 @@
     </div>
     <button class="conceptosAgregar" (click)="guardar()">Agregar</button>
 </form>
+
+
+@if (showToastDescuentoNoMayor) {
+<ngb-toast [autohide]="true" (hidden)="showToastDescuentoNoMayor = false" #dangerTpl style="position: fixed; text-align: center;"
+    class="top-0 end-0 bg-danger text-light">
+    El descuento {{concepto.descuento}} no puede ser mayor o igual que el importe {{concepto.importe}} a registrar.
+</ngb-toast>
+}
+

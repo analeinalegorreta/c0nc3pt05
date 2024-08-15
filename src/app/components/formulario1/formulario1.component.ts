@@ -35,6 +35,9 @@ export class Formulario1Component {
   public dropdownNivelEducativo: optionMultiSelect[] = [];
 
   public loadImpuestos = true
+  public showToastDescuentoNoMayor: boolean = false;
+
+  public concepto: Concepto = new Concepto()
 
   @Output() myEvent = new EventEmitter<Concepto>()
 
@@ -319,27 +322,34 @@ export class Formulario1Component {
   guardar() {
     this.myForm.markAllAsTouched();
     if (this.myForm.invalid) return;
-    let concepto = new Concepto()
-    concepto.cantidad = this.myForm.get('cantidad')!.value
-    concepto.claveUnidad = this.myForm.get('claveUnidad')!.value
-    concepto.unidad = this.myForm.get('unidad')!.value
-    concepto.noIdentificacion = this.myForm.get('noIdentificacion')!.value
-    concepto.descripcion = this.myForm.get('descripcion')!.value,
-      concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
-    concepto.descuento = Number(this.myForm.get('descuento')!.value)
-    concepto.claveProdServ = this.myForm.get('claveProdServ')!.value
-    concepto.objetoImp = this.myForm.get('objetoImp')!.value
-    let cantidadNumeroca = Number(concepto.cantidad)
-    concepto.importe = concepto.valorUnitario * cantidadNumeroca
-
-    concepto.complementosConcepto.iedu.nombreAlumno = this.myForm.get('complementosConcepto.iedu.nombreAlumno')!.value
-    concepto.complementosConcepto.iedu.curp = this.myForm.get('complementosConcepto.iedu.curp')!.value
-    concepto.complementosConcepto.iedu.nivelEducativo = this.myForm.get('complementosConcepto.iedu.nivelEducativo')!.value
-    concepto.complementosConcepto.iedu.autRVOE = this.myForm.get('complementosConcepto.iedu.autRVOE')!.value
-    concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
+    this.concepto = new Concepto()
+    this.concepto.cantidad = this.myForm.get('cantidad')!.value
+    this.concepto.claveUnidad = this.myForm.get('claveUnidad')!.value
+    this.concepto.unidad = this.myForm.get('unidad')!.value
+    this.concepto.noIdentificacion = this.myForm.get('noIdentificacion')!.value
+    this.concepto.descripcion = this.myForm.get('descripcion')!.value,
+      this.concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
+    this.concepto.descuento = Number(this.myForm.get('descuento')!.value)
+    this.concepto.claveProdServ = this.myForm.get('claveProdServ')!.value
+    this.concepto.objetoImp = this.myForm.get('objetoImp')!.value
+    let cantidadNumeroca = Number(this.concepto.cantidad)
+    this.concepto.importe = this.concepto.valorUnitario * cantidadNumeroca
+    this.importeNoMayorAdescuento()
+    this.concepto.complementosConcepto.iedu.nombreAlumno = this.myForm.get('complementosConcepto.iedu.nombreAlumno')!.value
+    this.concepto.complementosConcepto.iedu.curp = this.myForm.get('complementosConcepto.iedu.curp')!.value
+    this.concepto.complementosConcepto.iedu.nivelEducativo = this.myForm.get('complementosConcepto.iedu.nivelEducativo')!.value
+    this.concepto.complementosConcepto.iedu.autRVOE = this.myForm.get('complementosConcepto.iedu.autRVOE')!.value
+    this.concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
     console.log(this.myForm.value);
 
-    this.myEvent.emit(concepto)
+    this.myEvent.emit(this.concepto)
+  }
+
+  importeNoMayorAdescuento() {
+    if (!(this.concepto.descuento < this.concepto.importe)) {
+      this.showToastDescuentoNoMayor = true
+      throw new Error("Error descuento mayor que el importe"); //excepcion
+    }
   }
 
   guardarImpuestos(formImpuesto: FormGroup) {
