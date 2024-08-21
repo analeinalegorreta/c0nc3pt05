@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './components/modal/modal.component';
 import { CargosNoFacturablesComponent } from './components/cargos-no-facturables/cargos-no-facturables.component';
+import { ImpuestosComponent } from './components/impuestos/impuestos.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CargosNoFacturablesComponent } from './components/cargos-no-facturables
     AppComponent,
     Formulario1Component,
     ModalComponent,
-    CargosNoFacturablesComponent
+    CargosNoFacturablesComponent,
+    ImpuestosComponent
   ],
   imports: [
     BrowserModule,

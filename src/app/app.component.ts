@@ -73,4 +73,9 @@ export class AppComponent {
   }
 
 
+  totalTrasladosFederales(){
+    let totalTrasladosFederales=0
+    
+  }
+
 }

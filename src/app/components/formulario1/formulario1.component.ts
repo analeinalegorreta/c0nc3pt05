@@ -4,6 +4,7 @@ import { ConceptosService } from '../../services/conceptos.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Concepto } from '../../class/conceptos.class';
 import { Config } from 'datatables.net';
+import { TotalesConceptosService } from '../../services/totales-conceptos.service';
 
 interface optionMultiSelect {
   value: number,
@@ -17,7 +18,7 @@ interface optionMultiSelect {
 })
 export class Formulario1Component {
 
-  constructor(private ConceptosService: ConceptosService) { }
+  constructor(private ConceptosService: ConceptosService, private totalesConceptosService:TotalesConceptosService) { }
 
   public mostrarApartadoImpuestos: boolean = false;
   public mostrarApartadoIEDU: boolean = false;
@@ -332,6 +333,13 @@ export class Formulario1Component {
     this.concepto.descuento = Number(this.myForm.get('descuento')!.value)
     this.concepto.claveProdServ = this.myForm.get('claveProdServ')!.value
     this.concepto.objetoImp = this.myForm.get('objetoImp')!.value
+
+    // this.concepto.impuestos.retenciones = this.myForm.get('objetoImp')!.value
+    // this.concepto.impuestos.traslados = this.myForm.get('objetoImp')!.value
+
+
+
+ 
     let cantidadNumeroca = Number(this.concepto.cantidad)
     this.concepto.importe = this.concepto.valorUnitario * cantidadNumeroca
     this.importeNoMayorAdescuento()
@@ -340,7 +348,8 @@ export class Formulario1Component {
     this.concepto.complementosConcepto.iedu.nivelEducativo = this.myForm.get('complementosConcepto.iedu.nivelEducativo')!.value
     this.concepto.complementosConcepto.iedu.autRVOE = this.myForm.get('complementosConcepto.iedu.autRVOE')!.value
     this.concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
-    console.log(this.myForm.value);
+    // console.log(this.concepto);
+    this.totalesConceptosService.guardarConcepto(this.concepto)
 
     this.myEvent.emit(this.concepto)
   }

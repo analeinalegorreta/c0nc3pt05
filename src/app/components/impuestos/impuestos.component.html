@@ -1,0 +1,102 @@
+<!-- 
+<div class="container" class="mb-3">
+    <p>Impuestos Traslados Federales</p>
+    @if (impuestoTrasladosFederalesTabla) {
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" >
+          <thead>
+            <tr>
+              <th>Impuesto</th>
+              <th>Tasa</th>
+              <th>Factor </th>
+              <th>Importe </th>
+            </tr>
+          </thead>
+          <tbody>
+      
+            @for (impuesto of impuestos; track $index) {
+            <tr>
+              <td> {{impuesto.impuesto}} </td>
+              <td> {{impuesto.tasa}} </td>
+              <td>{{impuesto.factor}}</td>
+              <td>{{impuesto.importe}}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        }
+</div>
+
+<div class="container" class="mb-3">
+    <p>Impuestos Traslados Locales</p>
+    @if (impuestoTrasladosLocalesTabla) {
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" >
+            <thead>
+                <tr>
+                  <th>Impuesto</th>
+                  <th>Tasa</th>
+                  <th>Importe </th>
+                </tr>
+              </thead>
+              <tbody>
+          
+                @for (impuesto of impuestos; track $index) {
+                <tr>
+                  <td> {{impuesto.impuesto}} </td>
+                  <td> {{impuesto.tasa}} </td>
+                  <td>{{impuesto.importe}}</td>
+                </tr>
+                }
+          </tbody>
+        </table>
+        }
+</div>
+
+
+
+<div class="container" class="mb-3">
+    <p>Total Retenidos Federales</p>
+    @if (impuestoRetenidosFederalesTabla) {
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" >
+            <thead>
+                <tr>
+                  <th>Impuesto</th>
+                  <th>Importe </th>
+                </tr>
+              </thead>
+              <tbody>
+          
+                @for (impuesto of impuestos; track $index) {
+                <tr>
+                  <td> {{impuesto.impuesto}} </td>
+                  <td>{{impuesto.importe}}</td>
+                </tr>
+                }
+          </tbody>
+        </table>
+        }
+</div>
+
+<div class="container" class="mb-3">
+    <p>Total Retenidos Locales</p>
+    @if (impuestoRetenidosLocalesTabla) {
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" >
+            <thead>
+                <tr>
+                  <th>Impuesto</th>
+                  <th>Tasa</th>
+                  <th>Importe </th>
+                </tr>
+              </thead>
+              <tbody>
+          
+                @for (impuesto of impuestos; track $index) {
+                <tr>
+                  <td> {{impuesto.impuesto}} </td>
+                  <td> {{impuesto.tasa}} </td>
+                  <td>{{impuesto.importe}}</td>
+                </tr>
+                }
+          </tbody>
+        </table>
+        }
+</div> -->
