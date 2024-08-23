@@ -22,7 +22,7 @@
                 </div>
                 <div class="col mb-4">
                     <label for=" ">Local o Federal <i class="fa-solid text-danger fa-asterisk"></i></label>
-                    <select class="form-select form-control" formControlName="federalLocal">
+                    <select class="form-select form-control" id="localFederalId" formControlName="federalLocal">
                         <option *ngFor="let localFederal of dropdownLocaloFederal" [value]="localFederal.label">
                             {{localFederal.label}}</option>
                     </select>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col mb-4">
-
+{{myFormModal.getRawValue() | json}}
                 </div>
 
                 <div class="col mb-4" *ngIf="porcentajeAplicacionTasa">

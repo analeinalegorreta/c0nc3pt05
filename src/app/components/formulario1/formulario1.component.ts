@@ -5,6 +5,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Concepto } from '../../class/conceptos.class';
 import { Config } from 'datatables.net';
 import { TotalesConceptosService } from '../../services/totales-conceptos.service';
+import { Impuesto } from '../../class/impuesto.class';
 
 interface optionMultiSelect {
   value: number,
@@ -361,12 +362,23 @@ export class Formulario1Component {
     }
   }
 
-  guardarImpuestos(formImpuesto: FormGroup) {
+  guardarImpuestos(formImpuesto: Impuesto) {
 
-    if (formImpuesto.value['impuesto'] === 'Traslados') {
-      this.traslados().push(formImpuesto);
+    let form = new FormGroup({
+      impuesto: new FormControl(formImpuesto.impuesto),
+      federalLocal: new FormControl(formImpuesto.federalLocal),
+      trasladoRetencion: new FormControl(formImpuesto.trasladoRetencion),
+      tipoFactor: new FormControl(formImpuesto.tipoFactor),
+      tasaoCuota: new FormControl(formImpuesto.tasaoCuota),
+      pAplicacion: new FormControl(formImpuesto.pAplicacion)
+    })
+    console.log(form, "aqui");
+    
+
+    if (form.value['impuesto'] === 'TRASLADO') {
+      this.traslados().push(form);      
     } else {
-      this.retenciones().push(formImpuesto);
+      this.retenciones().push(form);
     }
 
     this.loadImpuestos = false;

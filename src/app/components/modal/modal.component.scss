@@ -9,3 +9,7 @@
     padding: 8px 15px;
 }
 
+.isDisabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
