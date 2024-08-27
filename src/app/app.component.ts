@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Concepto } from './class/conceptos.class';
 import { Config } from 'datatables.net';
 import { CargosNoFacturable } from './class/cargosNoFacturables.class';
+import { TotalesConceptosService } from './services/totales-conceptos.service';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +13,25 @@ import { CargosNoFacturable } from './class/cargosNoFacturables.class';
 export class AppComponent {
   public conceptos: Concepto[] = []
   public cargo: CargosNoFacturable[] = []
+  @ViewChild(DataTableDirective, { static: false })
+  public dtElement!: DataTableDirective;
   
+  constructor(private totalesConceptosService:TotalesConceptosService) { }
 
   loadConceptos = true
 
   datosConceptos(concepto: Concepto) {
     this.loadConceptos = false;
-    setTimeout(() => {
-      this.conceptos.push(concepto)
+  
+    console.log(concepto);
+    this.conceptos.push(concepto)
+    
+      this.dtElement.dtInstance.then((dtInstance: any) => {
+        dtInstance.draw();
+      });
+      
       this.loadConceptos = true;
-    }, 200);
+  
 
   } 
 
@@ -42,19 +53,13 @@ export class AppComponent {
   };
 
   subTotal() {
-    let SubTotal = 0
-    for (let a = 0; a < this.conceptos.length; a++) {
-      SubTotal += this.conceptos[a].importe
-    }
-    return SubTotal
+ 
+    return this.totalesConceptosService.getTotales().subTotal
   }
 
   descuento() {
-    let descuento: number = 0
-    for (let a = 0; a < this.conceptos.length; a++) {
-      descuento += this.conceptos[a].descuento
-    }
-    return descuento
+
+    return  this.totalesConceptosService.getTotales().descuento
   }
 
   total() {
@@ -74,8 +79,7 @@ export class AppComponent {
 
 
   totalTrasladosFederales(){
-    let totalTrasladosFederales=0
-    
+    return this.totalesConceptosService.getTotales().totalTrasladosFederales  
   }
 
 }

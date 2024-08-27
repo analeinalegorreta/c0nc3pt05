@@ -42,12 +42,12 @@ export class ModalComponent {
 
   constructor(private modalService: NgbModal) {
 
-   
+
   }
 
   ngOnInit() {
 
-   
+
 
     this.dropdownImpuesto = [
       { value: 1, label: '001 ISR', selected: false },
@@ -98,13 +98,13 @@ export class ModalComponent {
         (this.myFormModal.get('tipoFactor') as FormControl).setValue("TASA"),
         (this.myFormModal.get('federalLocal') as FormControl).setValue("FEDERAL"),
 
-      this.porcentajeAplicacionTasa = true
+        this.porcentajeAplicacionTasa = true
       this.tasaCuotaDinamico = 16
       this.porsentajeIngresadoBlur()
     } else if (seleccionado == "001 ISR" || seleccionado == "002 IVA" || seleccionado == "003 IEPS") {
 
       (this.myFormModal.get('federalLocal') as FormControl).setValue("FEDERAL"),
-      //   (this.myFormModal.get('federalLocal') as FormControl).disable(),
+        //   (this.myFormModal.get('federalLocal') as FormControl).disable(),
         (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null),
         (this.myFormModal.get('tipoFactor') as FormControl).setValue(null),
         this.porcentajeAplicacionTasa = false
@@ -113,10 +113,10 @@ export class ModalComponent {
     else {
       (this.myFormModal.get('tasaoCuota') as FormControl).setValue(null),
         (this.myFormModal.get('tipoFactor') as FormControl).setValue(null),
-       (this.myFormModal.get('federalLocal') as FormControl).setValue("LOCAL"),
+        (this.myFormModal.get('federalLocal') as FormControl).setValue("LOCAL"),
         // (this.myFormModal.get('federalLocal') as FormControl).disable()
 
-      this.porcentajeAplicacionTasa = false
+        this.porcentajeAplicacionTasa = false
       this.tasaOcuotaOculto = true
     }
   }
@@ -146,7 +146,7 @@ export class ModalComponent {
         (this.myFormModal.get('tasaoCuota') as FormControl).setValidators([Validators.required, Validators.min(1), Validators.max(100)])
       this.tasaOcuotaOculto = true
     }
-    console.log(this.myFormModal);
+
 
   }
 
@@ -179,9 +179,10 @@ export class ModalComponent {
     if ((this.myFormModal.get('tipoFactor') as FormControl).value != "TASA") {
       (this.myFormModal.get('pAplicacion') as FormControl).setValue("N/A")
     }
-  
-  let impuesto=this.myFormModal.getRawValue() as Impuesto  
+
+    let impuesto = this.myFormModal.getRawValue() as Impuesto
     this.myEvent.emit(impuesto)
+    this.myFormModal.reset()
     this.modalService.dismissAll()
   }
 
@@ -207,13 +208,13 @@ export class ModalComponent {
       pAplicacion: new FormControl(),
     });
 
-    (this.myFormModal.get('federalLocal') as FormControl).disable({onlySelf:true})
+    (this.myFormModal.get('federalLocal') as FormControl).disable({ onlySelf: true })
   }
 
 
 
   openVerticallyCentered(content: TemplateRef<any>) {
- 
+
     this.modalService.open(content, { centered: true, size: 'lg' });
     this.inicializarForm()
 

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Concepto } from '../class/conceptos.class';
 import { CargosNoFacturable } from '../class/cargosNoFacturables.class';
 import { Totales } from '../class/totales.class';
+import { FormArray, FormGroup } from '@angular/forms';
+import { Impuesto } from '../class/impuesto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ import { Totales } from '../class/totales.class';
 export class TotalesConceptosService {
 
   conceptos: Concepto[] = []
+  myForm: FormGroup[] = []
   cargosNoFacturables: CargosNoFacturable[] = []
   totales: Totales
 
@@ -16,8 +19,15 @@ export class TotalesConceptosService {
     this.totales = new Totales
   }
 
+  procesarConcepto(concepto: Concepto, myForm: FormGroup) {
+    this.conceptos.push(concepto)
+    this.myForm.push(myForm)
+    this.subTotal()
+    this.descuento()
+    this.totalTrasladosFederales()
+  }
 
-  subTotal() {
+private  subTotal() {
     let SubTotal = 0
     for (let a = 0; a < this.conceptos.length; a++) {
       SubTotal += this.conceptos[a].importe
@@ -25,7 +35,7 @@ export class TotalesConceptosService {
     this.totales.subTotal = SubTotal
   }
 
-  descuento() {
+private  descuento() {
     let descuento: number = 0
     for (let a = 0; a < this.conceptos.length; a++) {
       descuento += this.conceptos[a].descuento
@@ -34,23 +44,33 @@ export class TotalesConceptosService {
   }
 
 
-  totalTrasladosFederales() {
+ private totalTrasladosFederales() {
     let totalTrasladosFederales = 0
 
-
-
     for (let a = 0; a < this.conceptos.length; a++) {
-
-      for (let b = 0; b < this.conceptos[a].impuestos.traslados.length; b++) {
-      let tipoTraslado=this.conceptos[a].impuestos.traslados[b]
-        // if (tipoTraslado.=="") {
-
-        // }
+      let impuestos = this.myForm[a].get('impuestos') as FormGroup
+      let traslados = impuestos.get('traslados') as FormArray
+      for (let b = 0; b < traslados.controls.length; b++) {
+        let impuesto= traslados.controls[b] as FormGroup
+        let impuestoX=impuesto.value as Impuesto
+        if (impuestoX.federalLocal == 'FEDERAL') {
+          console.log(this.conceptos[a].importe + '-' + this.conceptos[a].descuento  + '-' +  impuestoX.tasaoCuota);
+          let resultado = (this.conceptos[a].importe - this.conceptos[a].descuento) * impuestoX.tasaoCuota
+          totalTrasladosFederales += resultado
+        }
       }
-      totalTrasladosFederales += (this.conceptos[a].importe - this.conceptos[a].descuento) 
+
     }
+    console.log('siguiente');
+    
+    this.totales.totalTrasladosFederales=totalTrasladosFederales
 
   }
+
+public  getTotales(){
+    return this.totales
+  }
+
 
   // total() {
   //   let total: number = 0
@@ -68,13 +88,6 @@ export class TotalesConceptosService {
   // }
 
 
-guardarConcepto(concepto:Concepto){
-this.conceptos.push(concepto)
-
-console.log(this.conceptos);
-
-
-}
 
 
 }

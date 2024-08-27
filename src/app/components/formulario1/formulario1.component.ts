@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConceptosService } from '../../services/conceptos.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -6,6 +6,7 @@ import { Concepto } from '../../class/conceptos.class';
 import { Config } from 'datatables.net';
 import { TotalesConceptosService } from '../../services/totales-conceptos.service';
 import { Impuesto } from '../../class/impuesto.class';
+import { DataTableDirective } from 'angular-datatables';
 
 interface optionMultiSelect {
   value: number,
@@ -43,42 +44,16 @@ export class Formulario1Component {
 
   @Output() myEvent = new EventEmitter<Concepto>()
 
+
+  
+
   dtOptions: Config = {
     searching: false,
 
   };
 
 
-  public myForm: FormGroup = new FormGroup({   // datos que se reciben del formulario y validaciones
-
-    cantidad: new FormControl('', [Validators.required]),
-    claveUnidad: new FormControl('', [Validators.required]),
-    unidad: new FormControl(),
-    noIdentificacion: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
-    valorUnitario: new FormControl('', [Validators.required]),
-    importe: new FormControl(),
-    descuento: new FormControl(),
-    claveProdServ: new FormControl('', [Validators.required]),
-    objetoImp: new FormControl('', [Validators.required]),
-    impuestos: new FormGroup({
-      traslados: new FormArray([]),
-      retenciones: new FormArray([])
-    }),
-    cuentaPredial: new FormControl('', [Validators.required]),
-    informacionAduanera: new FormControl(),
-    complementosConcepto: new FormGroup({
-      iedu: new FormGroup({
-        nombreAlumno: new FormControl(),
-        curp: new FormControl(),
-        nivelEducativo: new FormControl(),
-        autRVOE: new FormControl(),
-        rfcPago: new FormControl(),
-      }),
-    }),
-    cuentaTerceros: new FormControl(),
-
-  })
+  public myForm: FormGroup 
 
   public mask =
     [
@@ -228,6 +203,40 @@ export class Formulario1Component {
       }
     ];
 
+
+    inicializarForm(){
+    this.myForm=  new FormGroup({   // datos que se reciben del formulario y validaciones
+
+        cantidad: new FormControl('', [Validators.required]),
+        claveUnidad: new FormControl([], [Validators.required]),
+        unidad: new FormControl(),
+        noIdentificacion: new FormControl('', [Validators.required]),
+        descripcion: new FormControl('', [Validators.required]),
+        valorUnitario: new FormControl('', [Validators.required]),
+        importe: new FormControl(),
+        descuento: new FormControl(),
+        claveProdServ: new FormControl('', [Validators.required]),
+        objetoImp: new FormControl('', [Validators.required]),
+        impuestos: new FormGroup({
+          traslados: new FormArray([]),
+          retenciones: new FormArray([])
+        }),
+        cuentaPredial: new FormControl('', [Validators.required]),
+        informacionAduanera: new FormControl(),
+        complementosConcepto: new FormGroup({
+          iedu: new FormGroup({
+            nombreAlumno: new FormControl(),
+            curp: new FormControl(),
+            nivelEducativo: new FormControl(),
+            autRVOE: new FormControl(),
+            rfcPago: new FormControl(),
+          }),
+        }),
+        cuentaTerceros: new FormControl(),
+    
+      })
+    }
+
   validaconesIEDU() {
     (this.myForm.get('complementosConcepto.iedu.nombreAlumno') as FormControl).setValidators([Validators.required]),
       (this.myForm.get('complementosConcepto.iedu.curp') as FormControl).setValidators([Validators.required]),
@@ -285,7 +294,7 @@ export class Formulario1Component {
   }
 
   onItemSelectClaveUni() {
-    console.log(this.myForm.value['claveUnidad'][0].value);
+    console.log(this.myForm.get('claveUnidad')!.value[0].value );
 
     // let claveUni = item as optionMultiSelect
     // console.log(claveUni);
@@ -326,21 +335,14 @@ export class Formulario1Component {
     if (this.myForm.invalid) return;
     this.concepto = new Concepto()
     this.concepto.cantidad = this.myForm.get('cantidad')!.value
-    this.concepto.claveUnidad = this.myForm.get('claveUnidad')!.value
+    this.concepto.claveUnidad = this.myForm.get('claveUnidad')!.value[0].value
     this.concepto.unidad = this.myForm.get('unidad')!.value
     this.concepto.noIdentificacion = this.myForm.get('noIdentificacion')!.value
     this.concepto.descripcion = this.myForm.get('descripcion')!.value,
       this.concepto.valorUnitario = this.myForm.get('valorUnitario')!.value
     this.concepto.descuento = Number(this.myForm.get('descuento')!.value)
-    this.concepto.claveProdServ = this.myForm.get('claveProdServ')!.value
+    this.concepto.claveProdServ = this.myForm.get('claveProdServ')!.value[0].value
     this.concepto.objetoImp = this.myForm.get('objetoImp')!.value
-
-    // this.concepto.impuestos.retenciones = this.myForm.get('objetoImp')!.value
-    // this.concepto.impuestos.traslados = this.myForm.get('objetoImp')!.value
-
-
-
- 
     let cantidadNumeroca = Number(this.concepto.cantidad)
     this.concepto.importe = this.concepto.valorUnitario * cantidadNumeroca
     this.importeNoMayorAdescuento()
@@ -349,10 +351,11 @@ export class Formulario1Component {
     this.concepto.complementosConcepto.iedu.nivelEducativo = this.myForm.get('complementosConcepto.iedu.nivelEducativo')!.value
     this.concepto.complementosConcepto.iedu.autRVOE = this.myForm.get('complementosConcepto.iedu.autRVOE')!.value
     this.concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
-    // console.log(this.concepto);
-    this.totalesConceptosService.guardarConcepto(this.concepto)
-
+    this.totalesConceptosService.procesarConcepto(this.concepto, this.myForm)
     this.myEvent.emit(this.concepto)
+    console.log(this.concepto);
+ 
+    this.myForm.reset()
   }
 
   importeNoMayorAdescuento() {
@@ -372,10 +375,9 @@ export class Formulario1Component {
       tasaoCuota: new FormControl(formImpuesto.tasaoCuota),
       pAplicacion: new FormControl(formImpuesto.pAplicacion)
     })
-    console.log(form, "aqui");
     
 
-    if (form.value['impuesto'] === 'TRASLADO') {
+    if (form.value['trasladoRetencion'] === 'TRASLADO') {
       this.traslados().push(form);      
     } else {
       this.retenciones().push(form);
@@ -397,13 +399,15 @@ export class Formulario1Component {
   }
 
   ngOnInit() {
-
+    this.inicializarForm()
     this.ConceptosService.getProd().subscribe(resp => {
       resp.forEach((elem) => {
         this.dropdownConsultaClaveServicio.push({
+          
           label: elem.cClaveProdServ + ' - ' + elem.descripcion,
           value: elem.cClaveProdServ
         })
+        this.inicializarForm()
       })
 
     })
