@@ -358,6 +358,16 @@ export class Formulario1Component {
     this.myForm.reset()
   }
 
+  getClaveUnidad():FormControl{
+    return this.myForm.get("claveUnidad") as FormControl
+  }
+
+  getClaveProdServ():FormControl{
+    return this.myForm.get("claveProdServ") as FormControl
+  }
+
+
+
   importeNoMayorAdescuento() {
     if (!(this.concepto.descuento < this.concepto.importe)) {
       this.showToastDescuentoNoMayor = true

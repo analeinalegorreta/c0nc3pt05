@@ -13,7 +13,7 @@
             <div class="col mb-4">
                 <label for=" ">Clave Unidad**</label>
                 @if(dropdownConsultaClaveServicio.length>0){
-                <ng-multiselect-dropdown formControlName="claveUnidad"  class="no-checkbox  "
+                <ng-multiselect-dropdown [formControl]="getClaveUnidad()"  class="no-checkbox  "
                     [settings]="dropdownSettingsConsulta" [data]="dropdownConsultaClaveServicio"
                     (onSelect)="onItemSelectClaveUni()">
                 </ng-multiselect-dropdown>
@@ -31,7 +31,7 @@
             <div class="col mb-4">
                 <label for=" ">Clave Producto/Servicio**</label>
                 @if(dropdownConsultaClaveServicio.length>0){
-                <ng-multiselect-dropdown formControlName="claveProdServ"
+                <ng-multiselect-dropdown [formControl]="getClaveProdServ()"
                     class="no-checkbox  " [settings]="dropdownSettingsConsulta" [data]="dropdownConsultaClaveServicio">
                 </ng-multiselect-dropdown>
                 }
