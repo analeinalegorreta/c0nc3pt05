@@ -353,9 +353,7 @@ export class Formulario1Component {
     this.concepto.complementosConcepto.iedu.rfcPago = this.myForm.get('complementosConcepto.iedu.rfcPago')!.value
     this.totalesConceptosService.procesarConcepto(this.concepto, this.myForm)
     this.myEvent.emit(this.concepto)
-    console.log(this.concepto);
- 
-    this.myForm.reset()
+    this.inicializarForm()
   }
 
   getClaveUnidad():FormControl{
@@ -417,7 +415,7 @@ export class Formulario1Component {
           label: elem.cClaveProdServ + ' - ' + elem.descripcion,
           value: elem.cClaveProdServ
         })
-        this.inicializarForm()
+     
       })
 
     })

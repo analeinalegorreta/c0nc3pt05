@@ -21,6 +21,7 @@ export class AppComponent {
   loadConceptos = true
 
   datosConceptos(concepto: Concepto) {
+    
     this.loadConceptos = false;
   
     console.log(concepto);
